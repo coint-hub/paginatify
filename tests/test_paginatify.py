@@ -1,37 +1,11 @@
-from sqlalchemy import create_engine, Column, Integer
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy_paginate import Pagination
-
-engine = create_engine('sqlite://')
-Session = sessionmaker(bind=engine)
-Base = declarative_base(bind=engine)
-
-
-class Item(Base):
-    id = Column(Integer, primary_key=True, autoincrement=True)
-
-    __tablename__ = 'item'
-
-
-Base.metadata.create_all()
+from paginatify import Pagination
 
 
 def paginate(count, page=1):
-    def first(item):
-        return item[0]
-
-    session = Session()
-    map(session.add, [Item() for _ in range(count)])
-    try:
-        session.flush()
-        pagination = Pagination(session.query(Item.id), page=page, per_page=3,
-                                per_nav=3, map_=first)
-        assert pagination.total == count
-        return pagination
-    finally:
-        session.rollback()
-        session.close()
+    pagination = Pagination(range(1, count + 1), page=page, per_page=3,
+                            per_nav=3)
+    assert pagination.total == count
+    return pagination
 
 
 def test_normalize_page():

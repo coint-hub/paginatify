@@ -15,7 +15,7 @@ class Pagination(object):
     def __init__(self, query, page=1, per_page=10, per_nav=10,
                  map_=lambda x: x):
         self.first = 1
-        self.total = query.count()
+        self.total = len(query)
         if self.total == 0:
             self.last = 1
         else:

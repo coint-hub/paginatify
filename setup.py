@@ -1,9 +1,9 @@
 from setuptools import setup
 
 setup(
-        name='sqlalchemy-paginate',
-        version='0.0.2',
-        packages=['sqlalchemy_paginate'],
+        name='paginatify',
+        version='0.0.1',
+        packages=['paginatify'],
         zip_safe=False,
-        install_requires=['sqlalchemy>=1.0.11']
+        install_requires=[]
 )
