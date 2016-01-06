@@ -39,3 +39,6 @@ class Pagination(object):
 
         start = (self.page - 1) * per_page
         self.items = map(map_, query[start: start + per_page])
+
+
+SearchPagination = Pagination
