@@ -1,3 +1,6 @@
+from itertools import count
+
+
 def int_ceil(x, y):
     """
     equivalent to math.ceil(x / y)
@@ -39,6 +42,4 @@ class Pagination(object):
 
         start = (self.page - 1) * per_page
         self.items = map(map_, query[start: start + per_page])
-
-
-SearchPagination = Pagination
+        self.items_indexed = zip(count(self.total - start, step=-1), self.items)
