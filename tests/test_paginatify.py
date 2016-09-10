@@ -69,35 +69,35 @@ def test_nav_tail():
 
 
 def test_pages():
-    assert paginate(0).pages == [1]
+    assert paginate(0).pages == (1,)
 
-    assert paginate(31, 1).pages == [1, 2, 3]
-    assert paginate(31, 2).pages == [1, 2, 3]
-    assert paginate(31, 3).pages == [1, 2, 3]
+    assert paginate(31, 1).pages == (1, 2, 3)
+    assert paginate(31, 2).pages == (1, 2, 3)
+    assert paginate(31, 3).pages == (1, 2, 3)
 
-    assert paginate(31, 4).pages == [4, 5, 6]
-    assert paginate(31, 5).pages == [4, 5, 6]
-    assert paginate(31, 6).pages == [4, 5, 6]
+    assert paginate(31, 4).pages == (4, 5, 6)
+    assert paginate(31, 5).pages == (4, 5, 6)
+    assert paginate(31, 6).pages == (4, 5, 6)
 
-    assert paginate(31, 7).pages == [7, 8, 9]
-    assert paginate(31, 8).pages == [7, 8, 9]
-    assert paginate(31, 9).pages == [7, 8, 9]
+    assert paginate(31, 7).pages == (7, 8, 9)
+    assert paginate(31, 8).pages == (7, 8, 9)
+    assert paginate(31, 9).pages == (7, 8, 9)
 
-    assert paginate(31, 10).pages == [10, 11]
-    assert paginate(31, 11).pages == [10, 11]
-    assert paginate(31, 12).pages == [10, 11]
+    assert paginate(31, 10).pages == (10, 11)
+    assert paginate(31, 11).pages == (10, 11)
+    assert paginate(31, 12).pages == (10, 11)
 
 
 def test_items():
-    assert paginate(0).items == []
+    assert paginate(0).items == ()
 
-    assert paginate(31, 1).items == [1, 2, 3]
-    assert paginate(31, 2).items == [4, 5, 6]
-    assert paginate(31, 3).items == [7, 8, 9]
+    assert paginate(31, 1).items == (1, 2, 3)
+    assert paginate(31, 2).items == (4, 5, 6)
+    assert paginate(31, 3).items == (7, 8, 9)
 
-    assert paginate(31, 10).items == [28, 29, 30]
-    assert paginate(31, 11).items == [31]
-    assert paginate(31, 12).items == [31]
+    assert paginate(31, 10).items == (28, 29, 30)
+    assert paginate(31, 11).items == (31,)
+    assert paginate(31, 12).items == (31,)
 
 
 def test_first():
@@ -144,18 +144,18 @@ def test_has_nav_next():
 
 
 def test_items_indexed():
-    assert paginate(0).items_indexed == []
+    assert paginate(0).items_indexed == ()
 
-    assert paginate(1).items_indexed == [(1, 1)]
-    assert paginate(2).items_indexed == [(2, 1), (1, 2)]
-    assert paginate(3).items_indexed == [(3, 1), (2, 2), (1, 3)]
-    assert paginate(4).items_indexed == [(4, 1), (3, 2), (2, 3)]
-    assert paginate(4, 2).items_indexed == [(1, 4)]
+    assert paginate(1).items_indexed == ((1, 1),)
+    assert paginate(2).items_indexed == ((2, 1), (1, 2))
+    assert paginate(3).items_indexed == ((3, 1), (2, 2), (1, 3))
+    assert paginate(4).items_indexed == ((4, 1), (3, 2), (2, 3))
+    assert paginate(4, 2).items_indexed == ((1, 4),)
 
-    assert paginate(31, 1).items_indexed == [(31, 1), (30, 2), (29, 3)]
-    assert paginate(31, 2).items_indexed == [(28, 4), (27, 5), (26, 6)]
-    assert paginate(31, 3).items_indexed == [(25, 7), (24, 8), (23, 9)]
+    assert paginate(31, 1).items_indexed == ((31, 1), (30, 2), (29, 3))
+    assert paginate(31, 2).items_indexed == ((28, 4), (27, 5), (26, 6))
+    assert paginate(31, 3).items_indexed == ((25, 7), (24, 8), (23, 9))
 
-    assert paginate(31, 10).items_indexed == [(4, 28), (3, 29), (2, 30)]
-    assert paginate(31, 11).items_indexed == [(1, 31)]
-    assert paginate(31, 12).items_indexed == [(1, 31)]
+    assert paginate(31, 10).items_indexed == ((4, 28), (3, 29), (2, 30))
+    assert paginate(31, 11).items_indexed == ((1, 31),)
+    assert paginate(31, 12).items_indexed == ((1, 31),)

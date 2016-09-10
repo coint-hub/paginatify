@@ -38,8 +38,8 @@ class Pagination(object):
         self.nav_next = min(self.page + per_nav, self.last)
         self.has_nav_next = self.nav_next > self.nav_tail
 
-        self.pages = range(self.nav_head, self.nav_tail + 1)
+        self.pages = tuple(range(self.nav_head, self.nav_tail + 1))
 
         start = (self.page - 1) * per_page
-        self.items = map(map_, query[start: start + per_page])
-        self.items_indexed = zip(count(self.total - start, step=-1), self.items)
+        self.items = tuple(map(map_, query[start: start + per_page]))
+        self.items_indexed = tuple(zip(count(self.total - start, step=-1), self.items))

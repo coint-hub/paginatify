@@ -7,4 +7,4 @@ venv/bin/py.test: venv
 	venv/bin/pip install pytest-xdist
 
 venv:
-	virtualenv venv
+	virtualenv -p python3.5 venv
