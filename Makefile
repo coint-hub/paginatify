@@ -10,6 +10,7 @@ venv:
 	python3.8 -m venv venv
 
 push: venv
+	rm -rf dist/
 	venv/bin/pip install twine
 	python setup.py sdist
 	venv/bin/twine upload dist/*
