@@ -1,9 +1,10 @@
-from paginatify import Pagination
+from paginatify import paginatify
 
 
 def paginate(count, page=1):
-    pagination = Pagination(range(1, count + 1), page=page, per_page=3,
-                            per_nav=3)
+    pagination = paginatify(
+        range(1, count + 1), page=page, per_page=3, per_nav=3
+    )
     assert pagination.total == count
     return pagination
 
