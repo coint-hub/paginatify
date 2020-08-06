@@ -8,3 +8,8 @@ venv/bin/py.test: venv
 
 venv:
 	python3.8 -m venv venv
+
+push: venv
+	venv/bin/pip install twine
+	python setup.py sdist
+	venv/bin/twine upload dist/*
