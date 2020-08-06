@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from enum import Enum, auto
 from itertools import count
 from typing import Tuple, TypeVar, Generic, Callable, Sequence
 
@@ -48,7 +49,12 @@ class Pagination(Generic[T]):
     items_indexed: Tuple[(int, T)]
 
 
-def paginatify(query: Sequence[T], page=1, per_page=10, per_nav=10,
+class NavigationBase(Enum):
+    STANDARD = auto()
+    CENTER = auto()
+
+
+def paginatify(query: Sequence[T], page=1, per_page=10, per_nav=10, base: NavigationBase = NavigationBase.STANDARD,
                map_: Callable[[T], U] = lambda x: x) -> Pagination[U]:
     first = 1
     total = len(query)
@@ -63,9 +69,12 @@ def paginatify(query: Sequence[T], page=1, per_page=10, per_nav=10,
     next_ = min(page + 1, last)
     has_next = next_ != page
 
-    nav_head = per_nav * (int_ceil(page, per_nav) - 1) + 1
-    nav_tail = min(last, nav_head + per_nav - 1)
+    if base == NavigationBase.STANDARD:
+        nav_head = per_nav * (int_ceil(page, per_nav) - 1) + 1
+    else:
+        nav_head = max(first, page - ((per_nav - 1) // 2))
 
+    nav_tail = min(last, nav_head + per_nav - 1)
     nav_prev = max(page - per_nav, 1)
     has_nav_prev = nav_prev < nav_head
     nav_next = min(page + per_nav, last)

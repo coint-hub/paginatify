@@ -1,12 +1,16 @@
-from paginatify import paginatify
+from paginatify import paginatify, NavigationBase
 
 
-def paginate(count, page=1):
+def paginate(count, page=1, base=NavigationBase.STANDARD):
     pagination = paginatify(
-        range(1, count + 1), page=page, per_page=3, per_nav=3
+        range(1, count + 1), page=page, per_page=3, per_nav=3, base=base
     )
     assert pagination.total == count
     return pagination
+
+
+def paginate_center(count, page=1):
+    return paginate(count, page, NavigationBase.CENTER)
 
 
 def test_normalize_page():
@@ -46,6 +50,18 @@ def test_nav_head():
     assert paginate(31, 8).nav_head == 7
     assert paginate(31, 9).nav_head == 7
 
+    assert paginate_center(0).nav_head == 1
+
+    assert paginate_center(31, 1).nav_head == 1
+    assert paginate_center(31, 2).nav_head == 1
+    assert paginate_center(31, 3).nav_head == 2
+    assert paginate_center(31, 4).nav_head == 3
+    assert paginate_center(31, 5).nav_head == 4
+    assert paginate_center(31, 6).nav_head == 5
+    assert paginate_center(31, 7).nav_head == 6
+    assert paginate_center(31, 8).nav_head == 7
+    assert paginate_center(31, 9).nav_head == 8
+
 
 def test_nav_tail():
     assert paginate(0).nav_tail == 1
@@ -65,6 +81,27 @@ def test_nav_tail():
     assert paginate(31, 10).nav_tail == 11
     assert paginate(31, 11).nav_tail == 11
     p = paginate(31, 12)
+    assert p.page == 11
+    assert p.nav_tail == 11
+
+
+    assert paginate_center(0).nav_tail == 1
+
+    assert paginate_center(31, 1).nav_tail == 3
+    assert paginate_center(31, 2).nav_tail == 3
+    assert paginate_center(31, 3).nav_tail == 4
+
+    assert paginate_center(31, 4).nav_tail == 5
+    assert paginate_center(31, 5).nav_tail == 6
+    assert paginate_center(31, 6).nav_tail == 7
+
+    assert paginate_center(31, 7).nav_tail == 8
+    assert paginate_center(31, 8).nav_tail == 9
+    assert paginate_center(31, 9).nav_tail == 10
+
+    assert paginate_center(31, 10).nav_tail == 11
+    assert paginate_center(31, 11).nav_tail == 11
+    p = paginate_center(31, 12)
     assert p.page == 11
     assert p.nav_tail == 11
 
