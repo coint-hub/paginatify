@@ -60,8 +60,8 @@ def paginatify(query: Sequence[T], page=1, per_page=10, per_nav=10,
 
     prev = max(page - 1, 1)
     has_prev = prev != page
-    next = min(page + 1, last)
-    has_next = next != page
+    next_ = min(page + 1, last)
+    has_next = next_ != page
 
     nav_head = per_nav * (int_ceil(page, per_nav) - 1) + 1
     nav_tail = min(last, nav_head + per_nav - 1)
@@ -78,7 +78,7 @@ def paginatify(query: Sequence[T], page=1, per_page=10, per_nav=10,
     items_indexed = tuple(zip(count(total - start, step=-1), items))
 
     return Pagination(
-        total=total, first=first, last=last, page=page, prev=prev, next=next, has_prev=has_prev, has_next=has_next,
+        total=total, first=first, last=last, page=page, prev=prev, next=next_, has_prev=has_prev, has_next=has_next,
         pages=pages, nav_head=nav_head, nav_tail=nav_tail, nav_prev=nav_prev, nav_next=nav_next,
         has_nav_prev=has_nav_prev, has_nav_next=has_nav_next,
         items=items, items_indexed=items_indexed
